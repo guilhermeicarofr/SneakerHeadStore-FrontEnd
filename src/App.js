@@ -1,5 +1,7 @@
 function App() {
-  return;
+  return (
+    <h1>Store</h1>
+  );
 }
 
 export default App;
