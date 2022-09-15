@@ -7,6 +7,7 @@ import ButtonStyle from "../../Styles/button";
 import { signUp } from "../../Services/axios";
 export default function SignUp() {
   const [isBlocked, setIsBlocked] = useState(false);
+  const [warning, setWarning] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -16,19 +17,29 @@ export default function SignUp() {
   const navigate = useNavigate();
   function submitData(event) {
     event.preventDefault();
+    setWarning(false);
     setIsBlocked(true);
     if (form.password !== form.confirmPassword) {
-      alert("As senhas fornecidas devem ser iguais");
+      setWarning("As senhas fornecidas devem ser iguais");
       setIsBlocked(false);
       return;
     }
     signUp(form)
-      .catch((answer) => {
+      .then((answer) => {
         console.log(answer);
         setIsBlocked(false);
       })
-      .then((answer) => {
+      .catch((answer) => {
         console.log(answer);
+        if (answer.response.status === 422) {
+          setWarning(
+            "Nome deve ter pelo menos 3 caracteres. Senha deve ter pelo menos 4 caracteres"
+          );
+          setIsBlocked(false);
+          return;
+        }
+        setWarning("E-mail já está em uso");
+        setIsBlocked(false);
       });
   }
   function handleForm(e) {
@@ -81,6 +92,7 @@ export default function SignUp() {
             onChange={handleForm}
             readOnly={isBlocked}
           />
+          {warning ? <span>{warning}</span> : ""}
           <ButtonStyle type="submit" disabled={isBlocked}>
             Cadastre-se
           </ButtonStyle>

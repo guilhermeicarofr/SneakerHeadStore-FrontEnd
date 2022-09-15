@@ -1,15 +1,23 @@
 import styled from "styled-components";
 
 const FormStyle = styled.form`
+  @import url("https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
   display: flex;
   flex-direction: column;
   width: 80%;
+  font-family: "Roboto", sans-serif;
+  > span {
+    color: red;
+  }
   h1 {
     font-size: 32px;
     color: white;
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
+    font-family: "Ms Madi", cursive;
+    text-align: center;
   }
   input {
     margin: 10px 0;
@@ -31,6 +39,7 @@ const FormStyle = styled.form`
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    text-align: center;
   }
 `;
 export default FormStyle;

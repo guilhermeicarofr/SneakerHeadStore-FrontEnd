@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const SignUpStyle = styled.div`
-  background-color: red;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -16,6 +15,14 @@ const SignUpStyle = styled.div`
     > img {
       width: 100%;
       height: 100%;
+    }
+  }
+  @media (max-width: 650px) {
+    > div:first-child {
+      display: none;
+    }
+    > div {
+      width: 100%;
     }
   }
 `;

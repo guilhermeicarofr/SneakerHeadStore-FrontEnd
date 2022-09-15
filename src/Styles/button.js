@@ -10,6 +10,10 @@ const ButtonStyle = styled.button`
   margin-top: 10px;
   border-radius: 5px;
   color: #22223b;
+  cursor: pointer;
+  &:hover {
+    color: #eeeeee;
+  }
 `;
 
 export default ButtonStyle;
