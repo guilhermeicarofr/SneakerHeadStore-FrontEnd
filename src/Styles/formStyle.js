@@ -33,7 +33,7 @@ const FormStyle = styled.form`
       color: #22223b;
     }
   }
-  > p {
+  p {
     color: #f2e9e4;
     width: 100%;
     display: flex;
