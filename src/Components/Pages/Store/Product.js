@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function ProductCard({ model, brand, price, color, img }) {
+import ProductSelector from './ProductSelector.js';
+
+export default function Product({ model, brand, price, color, img }) {
 
     const [ selected, setSelected ] = useState(false);
     const [ click, setClick ] = useState([0,0]);
@@ -19,17 +21,18 @@ export default function ProductCard({ model, brand, price, color, img }) {
 
     if(selected) {
         return (
-            <CardContanier selected={selected}onClick={selectCard}>
-                <CardSelected click={click} view={view} onClick={()=>setSelected(!selected)}>
+            <ProductCard selected={selected}onClick={selectCard}>
+                <ProductExpanded click={click} view={view} onClick={()=>setSelected(!selected)}>
                     <h2>{brand}</h2>
                     <h1>{model}</h1>
                     <img src={img} alt='' />
-                </CardSelected>
-            </CardContanier>
+                    <ProductSelector />
+                </ProductExpanded>
+            </ProductCard>
         );
     } else {
         return (
-            <CardContanier onClick={(e)=> {
+            <ProductCard onClick={(e)=> {
                 setClick([e.clientX,e.clientY]);
                 selectCard();
             }}>
@@ -38,12 +41,12 @@ export default function ProductCard({ model, brand, price, color, img }) {
                     <h1>{model}</h1>
                     <p>${(price/100).toFixed(2)}</p>
                 </footer>
-            </CardContanier>
+            </ProductCard>
         );
     }
 }
 
-const CardContanier = styled.div`
+const ProductCard = styled.div`
     border-radius: ${props => (props.selected)? '50px;' : '10px;'};
     position: relative;
     width: 160px;
@@ -81,7 +84,7 @@ const CardContanier = styled.div`
     }
 `;
 
-const CardSelected = styled.div`
+const ProductExpanded = styled.div`
     position: absolute;
     ${props => (props.click[1]<=props.view[1]/2) ? 'top: 0px;' : 'bottom: 0px;'}
     ${props => (props.click[0]<=props.view[0]/2) ? 'left: 0px;' : 'right: 0px;'}

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import ProductCard from './ProductCard.js';
+import Product from './Product.js';
 
 import sneakers from '../../../sneakers.json';
 
@@ -10,7 +10,7 @@ export default function Store() {
     return (
         <StoreContainer>
             {sneakers.map((snk,index) =>
-                <ProductCard
+                <Product
                     key={index}
                     model={snk.model}
                     brand={snk.brand}
