@@ -3,7 +3,8 @@ import HeaderStyle from "../../../Styles/header.js";
 import Product from "./Product.js";
 import { IoBagOutline, IoPersonOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-
+import UserContext from "../../context/userContext.js";
+import { useContext } from "react";
 import sneakers from "../../../sneakers.json";
 import { useState } from "react";
 
@@ -11,12 +12,16 @@ export default function Store() {
   //alterar para basear no id
   const [selectedproduct, setSelectedproduct] = useState("");
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   return (
     <>
       <HeaderStyle>
-        <IconUser onClick={() => navigate("/sign-in")}>
-          <IoPersonOutline></IoPersonOutline>
-        </IconUser>
+        <div>
+          <IconUser onClick={() => navigate("/sign-in")}>
+            <IoPersonOutline></IoPersonOutline>
+          </IconUser>
+          {user ? <span>{user.name}</span> : ""}
+        </div>
         <h1>SneakerHead</h1>
         <IconBuy>
           <IoBagOutline></IoBagOutline>
