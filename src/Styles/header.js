@@ -7,7 +7,7 @@ const HeaderStyle = styled.header`
     rgba(73, 73, 102, 1) 5%,
     rgba(0, 212, 255, 1) 100%
   );
-  height: 80px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -15,7 +15,7 @@ const HeaderStyle = styled.header`
   left: 0;
   top: 0;
   right: 0;
-  z-index: 1;
+  z-index: 2;
   > div:first-child {
     display: flex;
     flex-direction: column;
@@ -27,6 +27,7 @@ const HeaderStyle = styled.header`
   h1 {
     font-family: "Ms Madi", cursive;
     font-size: 42px;
+    font-weight: 600;
     transition: all ease-in-out 200ms;
     &:hover {
       color: #f2e9e4;

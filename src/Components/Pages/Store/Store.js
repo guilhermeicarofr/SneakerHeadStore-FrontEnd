@@ -1,61 +1,41 @@
+import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import HeaderStyle from "../../../Styles/header.js";
+import { StoreContext } from "../../Contexts/storeContext.js";
+import { getProducts } from "../../../Services/axios.js";
 import Product from "./Product.js";
-import { IoBagOutline, IoPersonOutline, IoPerson } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import UserContext from "../../context/userContext.js";
-import { useContext } from "react";
-import sneakers from "../../../sneakers.json";
-import { useState } from "react";
-import { IconBuy, IconUser } from "../../../Styles/Icons.js";
+import NavBar from "./NavBar.js";
+
 export default function Store() {
-  //alterar para basear no id
+  const { products, setProducts } = useContext(StoreContext);
   const [selectedproduct, setSelectedproduct] = useState("");
-  const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
-  const [showLogOut, setShowLogOut] = useState(false);
+  useEffect(() => {
+    getProducts()
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((res) => {
+        console.log(res.error);
+      });
+  }, [setProducts]);
   return (
     <>
-      <HeaderStyle>
-        <LogOut
-          show={showLogOut}
-          setShowLogOut={setShowLogOut}
-          setUser={setUser}
-        ></LogOut>
-        <div>
-          <IconUser>
-            {user ? (
-              <>
-                <IoPerson onClick={() => setShowLogOut(true)}></IoPerson>
-              </>
-            ) : (
-              <IoPersonOutline
-                onClick={() => navigate("/sign-in")}
-              ></IoPersonOutline>
-            )}
-          </IconUser>
-        </div>
-        <h1>SneakerHead</h1>
-        <IconBuy>
-          <IoBagOutline></IoBagOutline>
-        </IconBuy>
-      </HeaderStyle>
+      <NavBar />
       <StoreContainer
         onClick={(e) => {
           if (e.target.localName === "main") setSelectedproduct("");
         }}
       >
-        {sneakers.map((snk, index) => (
+        {products.map((product, index) => (
           <Product
             selectedproduct={selectedproduct}
             setSelectedproduct={setSelectedproduct}
-            // _id
+            id={product._id}
+            model={product.model}
+            brand={product.brand}
+            color={product.color}
+            price={product.price}
+            img={product.img}
             key={index}
-            model={snk.model}
-            brand={snk.brand}
-            color={snk.color}
-            price={snk.price}
-            img={snk.img}
           />
         ))}
       </StoreContainer>
@@ -68,58 +48,4 @@ const StoreContainer = styled.main`
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 80px;
-`;
-function LogOut({ show, setShowLogOut, setUser }) {
-  return (
-    <LogOutStyle show={show}>
-      <h2>Deseja sair da sua conta ?</h2>
-      <div>
-        <span
-          onClick={() => {
-            setUser(null);
-            localStorage.removeItem("user");
-            setShowLogOut(false);
-          }}
-        >
-          Sim
-        </span>
-        <span onClick={() => setShowLogOut(false)}>Não</span>
-      </div>
-    </LogOutStyle>
-  );
-}
-const LogOutStyle = styled.div`
-  width: 250px;
-  height: 120px;
-  background-color: #f2e9e4;
-  border-radius: 5px;
-  position: fixed;
-  z-index: 2;
-  font-family: "Roboto", sans-serif;
-  font-size: 25px;
-  text-align: center;
-  padding: 10px;
-  transition: all ease-in-out 300ms;
-  top: ${(props) => (props.show ? "20px" : "-120px")};
-  left: 40%;
-  border: 2px solid #22223b;
-  div {
-    display: flex;
-    margin-top: 20px;
-    align-items: center;
-    justify-content: space-evenly;
-    span {
-      border: 2px solid #22223b;
-      border-radius: 10px;
-      width: 80px;
-      cursor: pointer;
-      &:hover {
-        background-color: #22223b;
-        color: #f2e9e4;
-      }
-    }
-    span:first-child {
-      margin-right: 20px;
-    }
-  }
 `;
