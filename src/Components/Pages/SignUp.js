@@ -1,5 +1,5 @@
-import SignUpStyle from "../../Styles/sign-up-style";
-import tenis from "./assets/tênis.jpg";
+import FormScreenStyle from "../../Styles/FormScreen";
+import tenis from "../../assets/tênis.jpg";
 import FormStyle from "../../Styles/formStyle";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -50,7 +50,7 @@ export default function SignUp() {
     });
   }
   return (
-    <SignUpStyle>
+    <FormScreenStyle>
       <div>
         <img src={tenis} alt="tênis" />
       </div>
@@ -102,6 +102,6 @@ export default function SignUp() {
           </Link>
         </FormStyle>
       </div>
-    </SignUpStyle>
+    </FormScreenStyle>
   );
 }

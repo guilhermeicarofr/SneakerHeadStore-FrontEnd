@@ -1,28 +1,22 @@
 import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-
-import { StoreContext } from '../../../Contexts/storeContext.js';
-import { getProducts } from '../../../Services/axios.js';
-
+import { StoreContext } from "../../Contexts/storeContext.js";
+import { getProducts } from "../../../Services/axios.js";
 import Product from "./Product.js";
 import NavBar from "./NavBar.js";
 
 export default function Store() {
-
   const { products, setProducts } = useContext(StoreContext);
-
-  const [ selectedproduct, setSelectedproduct ] = useState("");
-
+  const [selectedproduct, setSelectedproduct] = useState("");
   useEffect(() => {
     getProducts()
-    .then((res) => {
-      setProducts(res.data);
-    })
-    .catch((res) => {
-      console.log(res.error);
-    });
-  },[setProducts]);
-
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((res) => {
+        console.log(res.error);
+      });
+  }, [setProducts]);
   return (
     <>
       <NavBar />
@@ -53,5 +47,5 @@ const StoreContainer = styled.main`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 60px;
+  margin-top: 80px;
 `;

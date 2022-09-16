@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const SignUpStyle = styled.div`
+const FormScreenStyle = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -27,4 +27,4 @@ const SignUpStyle = styled.div`
   }
 `;
 
-export default SignUpStyle;
+export default FormScreenStyle;

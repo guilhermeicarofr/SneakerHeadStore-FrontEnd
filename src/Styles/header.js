@@ -16,6 +16,14 @@ const HeaderStyle = styled.header`
   top: 0;
   right: 0;
   z-index: 2;
+  > div:first-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    > span {
+      font-size: 30px;
+    }
+  }
   h1 {
     font-family: "Ms Madi", cursive;
     font-size: 42px;
