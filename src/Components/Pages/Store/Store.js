@@ -7,19 +7,27 @@ import UserContext from "../../context/userContext.js";
 import { useContext } from "react";
 import sneakers from "../../../sneakers.json";
 import { useState } from "react";
-
+import { IconBuy, IconUser } from "../../../Styles/Icons.js";
 export default function Store() {
   //alterar para basear no id
   const [selectedproduct, setSelectedproduct] = useState("");
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const [showLogOut, setShowLogOut] = useState(false);
   return (
     <>
       <HeaderStyle>
+        <LogOut
+          show={showLogOut}
+          setShowLogOut={setShowLogOut}
+          setUser={setUser}
+        ></LogOut>
         <div>
           <IconUser>
             {user ? (
-              <IoPerson></IoPerson>
+              <>
+                <IoPerson onClick={() => setShowLogOut(true)}></IoPerson>
+              </>
             ) : (
               <IoPersonOutline
                 onClick={() => navigate("/sign-in")}
@@ -61,32 +69,57 @@ const StoreContainer = styled.main`
   justify-content: center;
   margin-top: 80px;
 `;
-const IconBuy = styled.div`
-  font-size: 28px;
-  border-radius: 50%;
-  cursor: pointer;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all ease-in-out 200ms;
-  &:hover {
-    background-color: #f2e9e4;
-  }
-`;
-const IconUser = styled.div`
-  cursor: pointer;
-  font-size: 28px;
-  border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all ease-in-out 200ms;
-  position: relative;
-  &:hover {
-    background-color: #f2e9e4;
+function LogOut({ show, setShowLogOut, setUser }) {
+  return (
+    <LogOutStyle show={show}>
+      <h2>Deseja sair da sua conta ?</h2>
+      <div>
+        <span
+          onClick={() => {
+            setUser(null);
+            localStorage.removeItem("user");
+            setShowLogOut(false);
+          }}
+        >
+          Sim
+        </span>
+        <span onClick={() => setShowLogOut(false)}>Não</span>
+      </div>
+    </LogOutStyle>
+  );
+}
+const LogOutStyle = styled.div`
+  width: 250px;
+  height: 120px;
+  background-color: #f2e9e4;
+  border-radius: 5px;
+  position: fixed;
+  z-index: 2;
+  font-family: "Roboto", sans-serif;
+  font-size: 25px;
+  text-align: center;
+  padding: 10px;
+  transition: all ease-in-out 300ms;
+  top: ${(props) => (props.show ? "20px" : "-120px")};
+  left: 40%;
+  border: 2px solid #22223b;
+  div {
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: space-evenly;
+    span {
+      border: 2px solid #22223b;
+      border-radius: 10px;
+      width: 80px;
+      cursor: pointer;
+      &:hover {
+        background-color: #22223b;
+        color: #f2e9e4;
+      }
+    }
+    span:first-child {
+      margin-right: 20px;
+    }
   }
 `;
