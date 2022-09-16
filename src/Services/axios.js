@@ -6,4 +6,7 @@ function signUp(body) {
 function signIn(body) {
   return axios.post(`${process.env.REACT_APP_API_BASE_URL}sign-in`, body);
 }
-export { signUp, signIn };
+function getProducts() {
+  return axios.get(`${process.env.REACT_APP_API_BASE_URL}products`);
+}
+export { signUp, signIn, getProducts };

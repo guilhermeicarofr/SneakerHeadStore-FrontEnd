@@ -1,43 +1,47 @@
+import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import HeaderStyle from "../../../Styles/header.js";
-import Product from "./Product.js";
-import { IoBagOutline, IoPersonOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
 
-import sneakers from "../../../sneakers.json";
-import { useState } from "react";
+import { StoreContext } from '../../../Contexts/storeContext.js';
+import { getProducts } from '../../../Services/axios.js';
+
+import Product from "./Product.js";
+import NavBar from "./NavBar.js";
 
 export default function Store() {
-  //alterar para basear no id
-  const [selectedproduct, setSelectedproduct] = useState("");
-  const navigate = useNavigate();
+
+  const { products, setProducts } = useContext(StoreContext);
+
+  const [ selectedproduct, setSelectedproduct ] = useState("");
+
+  useEffect(() => {
+    getProducts()
+    .then((res) => {
+      setProducts(res.data);
+    })
+    .catch((res) => {
+      console.log(res.error);
+    });
+  },[setProducts]);
+
   return (
     <>
-      <HeaderStyle>
-        <IconUser onClick={() => navigate("/sign-in")}>
-          <IoPersonOutline></IoPersonOutline>
-        </IconUser>
-        <h1>SneakerHead</h1>
-        <IconBuy>
-          <IoBagOutline></IoBagOutline>
-        </IconBuy>
-      </HeaderStyle>
+      <NavBar />
       <StoreContainer
         onClick={(e) => {
           if (e.target.localName === "main") setSelectedproduct("");
         }}
       >
-        {sneakers.map((snk, index) => (
+        {products.map((product, index) => (
           <Product
             selectedproduct={selectedproduct}
             setSelectedproduct={setSelectedproduct}
-            // _id
+            id={product._id}
+            model={product.model}
+            brand={product.brand}
+            color={product.color}
+            price={product.price}
+            img={product.img}
             key={index}
-            model={snk.model}
-            brand={snk.brand}
-            color={snk.color}
-            price={snk.price}
-            img={snk.img}
           />
         ))}
       </StoreContainer>
@@ -49,33 +53,5 @@ const StoreContainer = styled.main`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 80px;
-`;
-const IconBuy = styled.div`
-  font-size: 28px;
-  border-radius: 50%;
-  cursor: pointer;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all ease-in-out 200ms;
-  &:hover {
-    background-color: #f2e9e4;
-  }
-`;
-const IconUser = styled.div`
-  cursor: pointer;
-  font-size: 28px;
-  border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all ease-in-out 200ms;
-  &:hover {
-    background-color: #f2e9e4;
-  }
+  margin-top: 60px;
 `;
