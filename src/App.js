@@ -9,7 +9,7 @@ function App() {
       <ResetStyle />
       <Routes>
         <Route path="/" element={<Store />} />
-        <Route path="/signup" element={<SignUp />}></Route>
+        <Route path="/sign-up" element={<SignUp />}></Route>
         <Route path="/sign-in" element={<SignIn />}></Route>
       </Routes>
     </BrowserRouter>

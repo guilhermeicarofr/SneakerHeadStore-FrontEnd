@@ -20,6 +20,7 @@ export default function SignIn() {
     signIn(form)
       .then(() => {
         setIsBlocked(false);
+        navigate("/");
       })
       .catch((answer) => {
         console.log(answer);
