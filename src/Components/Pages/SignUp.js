@@ -56,7 +56,7 @@ export default function SignUp() {
       </div>
       <div>
         <FormStyle onSubmit={submitData}>
-          <h1>SneakerHead Store</h1>
+          <h1 onClick={() => navigate("/")}>SneakerHead Store</h1>
           <input
             type="text"
             name="name"
