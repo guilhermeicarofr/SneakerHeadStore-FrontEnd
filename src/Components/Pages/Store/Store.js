@@ -6,6 +6,7 @@ import { getProducts } from '../../../Services/axios.js';
 
 import Product from "./Product.js";
 import NavBar from "./NavBar.js";
+import CartMenu from '../Cart/CartMenu.js';
 
 export default function Store() {
 
@@ -26,6 +27,7 @@ export default function Store() {
   return (
     <>
       <NavBar />
+      <CartMenu />
       <StoreContainer
         onClick={(e) => {
           if (e.target.localName === "main") setSelectedproduct("");
