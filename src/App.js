@@ -15,8 +15,7 @@ function App() {
       <ResetStyle />
       <UserContext.Provider value={{ user, setUser }}>
         <StoreContext.Provider
-          value={{ products, setProducts, shopcart, setShopcart }}
-        >
+          value={{ products, setProducts, shopcart, setShopcart }}>
           <Routes>
             <Route path="/" element={<Store />} />
             <Route path="/sign-up" element={<SignUp />}></Route>
