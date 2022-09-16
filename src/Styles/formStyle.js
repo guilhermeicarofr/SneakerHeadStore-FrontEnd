@@ -18,6 +18,7 @@ const FormStyle = styled.form`
     margin-bottom: 30px;
     font-family: "Ms Madi", cursive;
     text-align: center;
+    cursor: pointer;
   }
   input {
     margin: 10px 0;
