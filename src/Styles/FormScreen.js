@@ -12,9 +12,13 @@ const FormScreenStyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  > div:first-child {
+    background-color: #e1e6ec;
+    object-fit: cover;
     > img {
-      width: 100%;
-      height: 100%;
+      width: 250px;
+      height: 250px;
     }
   }
   @media (max-width: 650px) {
