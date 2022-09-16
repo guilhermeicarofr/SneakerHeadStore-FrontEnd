@@ -10,6 +10,10 @@ function App() {
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
   const [shopcart, setShopcart] = useState([]);
+  if (localStorage.getItem("user") !== null && user === null) {
+    const user = JSON.parse(localStorage.getItem("user"));
+    setUser(user);
+  }
   return (
     <BrowserRouter>
       <ResetStyle />
