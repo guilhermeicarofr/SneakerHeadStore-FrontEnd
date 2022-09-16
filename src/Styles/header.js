@@ -16,10 +16,11 @@ const HeaderStyle = styled.header`
   top: 0;
   right: 0;
   z-index: 1;
-  div:first-child {
+  > div:first-child {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    span {
+    > span {
       font-size: 30px;
     }
   }

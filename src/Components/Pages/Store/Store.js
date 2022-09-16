@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import HeaderStyle from "../../../Styles/header.js";
 import Product from "./Product.js";
-import { IoBagOutline, IoPersonOutline } from "react-icons/io5";
+import { IoBagOutline, IoPersonOutline, IoPerson } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../context/userContext.js";
 import { useContext } from "react";
@@ -17,10 +17,15 @@ export default function Store() {
     <>
       <HeaderStyle>
         <div>
-          <IconUser onClick={() => navigate("/sign-in")}>
-            <IoPersonOutline></IoPersonOutline>
+          <IconUser>
+            {user ? (
+              <IoPerson></IoPerson>
+            ) : (
+              <IoPersonOutline
+                onClick={() => navigate("/sign-in")}
+              ></IoPersonOutline>
+            )}
           </IconUser>
-          {user ? <span>{user.name}</span> : ""}
         </div>
         <h1>SneakerHead</h1>
         <IconBuy>
@@ -80,6 +85,7 @@ const IconUser = styled.div`
   align-items: center;
   justify-content: center;
   transition: all ease-in-out 200ms;
+  position: relative;
   &:hover {
     background-color: #f2e9e4;
   }

@@ -1,10 +1,10 @@
-import tenis from "./assets/tênis.jpg";
+import tenis from "../../assets/tênis.jpg";
 import FormStyle from "../../Styles/formStyle";
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import ButtonStyle from "../../Styles/button";
 import { signIn } from "../../Services/axios";
-import SignInStyle from "../../Styles/sign-in-style";
+import FormScreenStyle from "../../Styles/FormScreen";
 import UserContext from "../context/userContext";
 export default function SignIn() {
   const [isBlocked, setIsBlocked] = useState(false);
@@ -23,6 +23,10 @@ export default function SignIn() {
       .then((answer) => {
         setIsBlocked(false);
         setUser({ ...answer.data, email: form.email });
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ ...answer.data, email: form.email })
+        );
         navigate("/");
       })
       .catch((answer) => {
@@ -38,7 +42,7 @@ export default function SignIn() {
     });
   }
   return (
-    <SignInStyle>
+    <FormScreenStyle>
       <div>
         <img src={tenis} alt="tênis" />
       </div>
@@ -72,6 +76,6 @@ export default function SignIn() {
           </Link>
         </FormStyle>
       </div>
-    </SignInStyle>
+    </FormScreenStyle>
   );
 }
