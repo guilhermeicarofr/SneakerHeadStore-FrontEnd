@@ -6,6 +6,8 @@ import ProductSelector from "./ProductSelector.js";
 export default function Product({
   selectedproduct,
   setSelectedproduct,
+  shopcart,
+  setShopcart,
   id,
   model,
   brand,
@@ -31,7 +33,7 @@ export default function Product({
           <img src={img} alt="" />
           <h3>${(price / 100).toFixed(2)}</h3>
           <h4>{color}</h4>
-          <ProductSelector id={id} />
+          <ProductSelector id={id} setSelectedproduct={setSelectedproduct} shopcart={shopcart} setShopcart={setShopcart} />
         </ProductExpanded>
       </ProductCard>
     );

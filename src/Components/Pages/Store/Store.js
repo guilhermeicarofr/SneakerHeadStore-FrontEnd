@@ -9,8 +9,11 @@ import { useState, useEffect } from "react";
 export default function Store() {
 
   const [ products, setProducts ] = useState([]);
-  const [selectedproduct, setSelectedproduct] = useState("");
+  const [ shopcart, setShopcart] = useState([]);
+  const [ selectedproduct, setSelectedproduct ] = useState("");
   const navigate = useNavigate();
+
+  console.log(shopcart);
 
   useEffect(() => {
     getProducts()
@@ -21,12 +24,6 @@ export default function Store() {
       console.log(res.error);
     });
   },[]);
-
-
-
-
-
-
 
   return (
     <>
@@ -48,6 +45,8 @@ export default function Store() {
           <Product
             selectedproduct={selectedproduct}
             setSelectedproduct={setSelectedproduct}
+            shopcart={shopcart}
+            setShopcart={setShopcart}
             id={product._id}
             key={index}
             model={product.model}

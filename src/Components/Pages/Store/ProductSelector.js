@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function ProductSelector({ id }) {
+export default function ProductSelector({ id, setSelectedproduct, shopcart, setShopcart }) {
 
     const [ selectedsize, setSelectedsize ] = useState('');
 
-    console.log(id); //alterar para ID
-    console.log(selectedsize)
+    console.log(shopcart);
 
     function selectSize(e) {
         setSelectedsize(e.target.innerHTML);
+    }
+    function addToCart() {
+        setShopcart([...shopcart, { id, size: selectedsize }]);
+        setSelectedproduct('');
     }
 
     return (
@@ -24,7 +27,7 @@ export default function ProductSelector({ id }) {
                 <Size selectedsize={selectedsize} onClick={selectSize}>42</Size>
                 <Size selectedsize={selectedsize} onClick={selectSize}>43</Size>
             </div>
-            <button>Adicionar ao Carrinho</button>
+            <button onClick={addToCart}>Adicionar ao Carrinho</button>
         </Selector>
     );
 }
