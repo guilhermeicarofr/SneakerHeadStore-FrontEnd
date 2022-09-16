@@ -50,7 +50,7 @@ border-spacing: 0;
 }
 
 body {
-background-color: #FFFFFF;
+    background-color: #22223b;
 }
 *{
 box-sizing: border-box;
