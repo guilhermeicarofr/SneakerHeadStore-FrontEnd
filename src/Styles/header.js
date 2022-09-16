@@ -18,7 +18,7 @@ const HeaderStyle = styled.header`
   z-index: 1;
   h1 {
     font-family: "Ms Madi", cursive;
-    font-size: 40px;
+    font-size: 42px;
     transition: all ease-in-out 200ms;
     &:hover {
       color: #f2e9e4;

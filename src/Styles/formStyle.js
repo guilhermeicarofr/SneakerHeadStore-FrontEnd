@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 const FormStyle = styled.form`
-  @import url("https://fonts.googleapis.com/css2?family=Ms+Madi&display=swap");
-  @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -11,7 +9,7 @@ const FormStyle = styled.form`
     color: red;
   }
   h1 {
-    font-size: 32px;
+    font-size: 42px;
     color: white;
     display: flex;
     justify-content: center;
