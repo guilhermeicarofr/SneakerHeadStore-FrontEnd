@@ -6,7 +6,7 @@ import UserContext from "../../Contexts/userContext.js";
 import { StoreContext } from "../../Contexts/storeContext.js";
 import { IconBuy, IconUser } from "../../../Styles/Icons.js";
 import HeaderStyle from "../../../Styles/header.js";
-
+import { deleteSession } from "../../../Services/axios.js";
 export default function NavBar() {
   const { shopcart } = useContext(StoreContext);
   const { user, setUser } = useContext(UserContext);
@@ -15,11 +15,7 @@ export default function NavBar() {
 
   return (
     <HeaderStyle>
-      <LogOut
-        show={showLogOut}
-        setShowLogOut={setShowLogOut}
-        setUser={setUser}
-      ></LogOut>
+      <LogOut show={showLogOut} setShowLogOut={setShowLogOut}></LogOut>
       <div>
         <IconUser>
           {user ? (
@@ -41,16 +37,23 @@ export default function NavBar() {
     </HeaderStyle>
   );
 }
-function LogOut({ show, setShowLogOut, setUser }) {
+function LogOut({ show, setShowLogOut }) {
+  const { user, setUser } = useContext(UserContext);
   return (
     <LogOutStyle show={show}>
       <h2>Deseja sair da sua conta ?</h2>
       <div>
         <span
           onClick={() => {
-            setUser(null);
-            localStorage.removeItem("user");
-            setShowLogOut(false);
+            deleteSession({
+              headers: { Authorization: `Bearer ${user.token}` },
+            })
+              .then(() => {
+                setUser(null);
+                localStorage.removeItem("user");
+                setShowLogOut(false);
+              })
+              .catch((answer) => console.log(answer));
           }}
         >
           Sim

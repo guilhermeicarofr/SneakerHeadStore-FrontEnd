@@ -9,4 +9,7 @@ function signIn(body) {
 function getProducts() {
   return axios.get(`${process.env.REACT_APP_API_BASE_URL}products`);
 }
-export { signUp, signIn, getProducts };
+function deleteSession(config) {
+  return axios.delete(`${process.env.REACT_APP_API_BASE_URL}session`, config);
+}
+export { signUp, signIn, getProducts, deleteSession };
