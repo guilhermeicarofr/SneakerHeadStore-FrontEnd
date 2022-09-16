@@ -6,6 +6,7 @@ import ProductSelector from "./ProductSelector.js";
 export default function Product({
   selectedproduct,
   setSelectedproduct,
+  id,
   model,
   brand,
   price,
@@ -14,11 +15,11 @@ export default function Product({
 }) {
   const [click, setClick] = useState([0, 0]);
   const view = [window.innerWidth, window.innerHeight];
-  const selected = model === selectedproduct; //alterar para id do produto
+  const selected = (id === selectedproduct);
 
   function selectCard(e) {
     setClick([e.clientX, e.clientY]);
-    setSelectedproduct(model);
+    setSelectedproduct(id);
   }
 
   if (selected) {
@@ -30,8 +31,7 @@ export default function Product({
           <img src={img} alt="" />
           <h3>${(price / 100).toFixed(2)}</h3>
           <h4>{color}</h4>
-          <ProductSelector model={model} />
-          {/* alterar para id */}
+          <ProductSelector id={id} />
         </ProductExpanded>
       </ProductCard>
     );

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function ProductSelector({model}) {
+export default function ProductSelector({ id }) {
 
     const [ selectedsize, setSelectedsize ] = useState('');
 
-    console.log(model); //alterar para ID
+    console.log(id); //alterar para ID
     console.log(selectedsize)
 
     function selectSize(e) {

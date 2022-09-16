@@ -3,14 +3,31 @@ import HeaderStyle from "../../../Styles/header.js";
 import Product from "./Product.js";
 import { IoBagOutline, IoPersonOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-
-import sneakers from "../../../sneakers.json";
-import { useState } from "react";
+import { getProducts } from '../../../Services/axios.js';
+import { useState, useEffect } from "react";
 
 export default function Store() {
-  //alterar para basear no id
+
+  const [ products, setProducts ] = useState([]);
   const [selectedproduct, setSelectedproduct] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getProducts()
+    .then((res) => {
+      setProducts(res.data);
+    })
+    .catch((res) => {
+      console.log(res.error);
+    });
+  },[]);
+
+
+
+
+
+
+
   return (
     <>
       <HeaderStyle>
@@ -27,17 +44,17 @@ export default function Store() {
           if (e.target.localName === "main") setSelectedproduct("");
         }}
       >
-        {sneakers.map((snk, index) => (
+        {products.map((product, index) => (
           <Product
             selectedproduct={selectedproduct}
             setSelectedproduct={setSelectedproduct}
-            // _id
+            id={product._id}
             key={index}
-            model={snk.model}
-            brand={snk.brand}
-            color={snk.color}
-            price={snk.price}
-            img={snk.img}
+            model={product.model}
+            brand={product.brand}
+            color={product.color}
+            price={product.price}
+            img={product.img}
           />
         ))}
       </StoreContainer>
