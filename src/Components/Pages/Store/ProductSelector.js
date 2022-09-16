@@ -1,16 +1,22 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from 'styled-components';
 
-export default function ProductSelector({ id, setSelectedproduct, shopcart, setShopcart }) {
+import { StoreContext } from '../../../Contexts/storeContext.js';
+
+export default function ProductSelector({ id, setSelectedproduct }) {
+
+    const { shopcart, setShopcart } = useContext(StoreContext);
 
     const [ selectedsize, setSelectedsize ] = useState('');
-
-    console.log(shopcart);
 
     function selectSize(e) {
         setSelectedsize(e.target.innerHTML);
     }
     function addToCart() {
+        if(!selectedsize) {
+            alert('Selecione um tamanho!');
+            return;
+        } 
         setShopcart([...shopcart, { id, size: selectedsize }]);
         setSelectedproduct('');
     }
