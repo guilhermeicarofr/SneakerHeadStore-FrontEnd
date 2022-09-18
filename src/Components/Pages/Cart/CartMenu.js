@@ -32,26 +32,35 @@ export default function CartMenu({ showcart, setShowcart }) {
                 <div onClick={()=>setShowcart(false)}>
                 </div>
                 <menu>
-                    <button onClick={()=>setShowcart(false)}>X</button>
+                    <button className='close' onClick={()=>setShowcart(false)}>X</button>
                     <h1>{user ? user?.name : 'Faça Log-In para finalizar a compra'}</h1>
                     <h2>Você possui {shopcart.length} itens no carrinho</h2>
                     
-                    {list.map(product => <CartItem
-                        id={product._id}
-                        model={product.model}
-                        brand={product.brand}
-                        color={product.color}
-                        img={product.img}
-                        price={product.price}
-                        size={product.size}
-                    />)}
+                    <ul>
+                        {list.map((product,index) => <CartItem
+                            key={index}
+                            id={product._id}
+                            model={product.model}
+                            brand={product.brand}
+                            color={product.color}
+                            img={product.img}
+                            price={product.price}
+                            size={product.size}
+                        />)}
+                    </ul>
 
-                    <h3>{(list.map(product => product.price).reduce((a, b) => a + b) / 100).toFixed(2)}</h3>
+                    <h3>${list.length?
+                        (list.map(product => product.price).reduce((a, b) => a + b) / 100).toFixed(2) :
+                        '0.00'
+                    }</h3>
 
-                    { user ?
-                        <button onClick={()=>console.log('inserir navigate para pagina de compra')}>Finalizar Compra</button>
-                    :
+                    {(!user) ?
                         <button onClick={()=>navigate('/sign-in')}>Fazer Log-In</button>
+                    :
+                        (shopcart.length) ?
+                            <button onClick={()=>navigate('/purchase-confirmation')}>Finalizar Compra</button>
+                        :
+                            <button onClick={()=>setShowcart(false)}>Adicione um produto</button>
                     }
                 </menu>
             </CartMenuLayer>
@@ -70,7 +79,7 @@ const CartMenuLayer = styled.div`
     right: 0px;
     z-index: 3;
     display: flex;
-    div{
+    > div{
         width: Calc(100vw - 320px);
         height: 100vh;
         background-color: rgba(74, 78, 105, 0.5);
@@ -79,5 +88,23 @@ const CartMenuLayer = styled.div`
         width: 320px;
         height: 100vh;
         background-color: #F2E9E4;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        button.close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 15px;
+            height: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: transparent;
+            background-color: transparent;
+        }
+        ul {
+            width: 100%;
+        }
     }
 `;
