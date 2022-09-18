@@ -7,6 +7,7 @@ import SignIn from "./Components/Pages/SignIn";
 import UserContext from "./Components/Contexts/userContext";
 import { StoreContext } from "./Components/Contexts/storeContext.js";
 import PurchaseConfirmation from "./Components/Pages/Purchase-confirmation";
+import FinalizeOrder from "./Components/Pages/Finalize-order";
 function App() {
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
@@ -31,6 +32,7 @@ function App() {
               element={<PurchaseConfirmation/>}
             ></Route> */}
             <Route path="/" element={<PurchaseConfirmation />}></Route>
+            <Route path="/finalize-order" element={<FinalizeOrder />}></Route>
           </Routes>
         </StoreContext.Provider>
       </UserContext.Provider>
