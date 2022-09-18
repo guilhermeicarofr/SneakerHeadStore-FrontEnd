@@ -9,6 +9,7 @@ import CartMenu from '../Cart/CartMenu.js';
 export default function Store() {
   const { products, setProducts } = useContext(StoreContext);
   const [selectedproduct, setSelectedproduct] = useState("");
+  const [ showcart, setShowcart ] = useState(false);
   useEffect(() => {
     getProducts()
       .then((res) => {
@@ -20,8 +21,8 @@ export default function Store() {
   }, [setProducts]);
   return (
     <>
-      <NavBar />
-      <CartMenu />
+      <NavBar setShowcart={setShowcart} />
+      <CartMenu showcart={showcart} setShowcart={setShowcart} />
       <StoreContainer
         onClick={(e) => {
           if (e.target.localName === "main") setSelectedproduct("");

@@ -7,7 +7,7 @@ import { StoreContext } from "../../Contexts/storeContext.js";
 import { IconBuy, IconUser } from "../../../Styles/Icons.js";
 import HeaderStyle from "../../../Styles/header.js";
 
-export default function NavBar() {
+export default function NavBar({ setShowcart }) {
   const { shopcart } = useContext(StoreContext);
   const { user, setUser } = useContext(UserContext);
   const [showLogOut, setShowLogOut] = useState(false);
@@ -34,7 +34,7 @@ export default function NavBar() {
         </IconUser>
       </div>
       <h1>SneakerHead</h1>
-      <IconBuy>
+      <IconBuy onClick={()=>setShowcart(true)}>
         <IoBagOutline></IoBagOutline>
         {shopcart.length ? <h3>{shopcart.length}</h3> : ""}
       </IconBuy>
