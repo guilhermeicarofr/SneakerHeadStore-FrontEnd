@@ -25,8 +25,6 @@ export default function CartMenu({ showcart, setShowcart }) {
         );
     });
     
-    console.log(user);
-    console.log(list);
 
     if(showcart) {
         return (
@@ -39,8 +37,16 @@ export default function CartMenu({ showcart, setShowcart }) {
                     <h2>Você possui {shopcart.length} itens no carrinho</h2>
                     
                     {list.map(product => <CartItem
-
+                        id={product._id}
+                        model={product.model}
+                        brand={product.brand}
+                        color={product.color}
+                        img={product.img}
+                        price={product.price}
+                        size={product.size}
                     />)}
+
+                    <h3>{(list.map(product => product.price).reduce((a, b) => a + b) / 100).toFixed(2)}</h3>
 
                     { user ?
                         <button onClick={()=>console.log('inserir navigate para pagina de compra')}>Finalizar Compra</button>
