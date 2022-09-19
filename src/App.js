@@ -16,12 +16,20 @@ function App() {
     const user = JSON.parse(localStorage.getItem("user"));
     setUser(user);
   }
+  const [totalvalue, setTotalvalue] = useState(0);
   return (
     <BrowserRouter>
       <ResetStyle />
       <UserContext.Provider value={{ user, setUser }}>
         <StoreContext.Provider
-          value={{ products, setProducts, shopcart, setShopcart }}
+          value={{
+            products,
+            setProducts,
+            shopcart,
+            setShopcart,
+            totalvalue,
+            setTotalvalue,
+          }}
         >
           <Routes>
             <Route path="/" element={<Store />} />

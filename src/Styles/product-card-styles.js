@@ -99,7 +99,7 @@ const ProductExpanded = styled.div`
     position: absolute;
     width: 25px;
     height: 25px;
-    font-size: 25px;
+    font-size: 15px;
     border: transparent;
     background-color: transparent;
     display: flex;
