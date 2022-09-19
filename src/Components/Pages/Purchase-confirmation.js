@@ -9,35 +9,47 @@ import styled from "styled-components";
 
 export default function PurchaseConfirmation() {
   const { state: list } = useLocation();
+  const { user } = useContext(UserContext);
   return (
     <PurchaseConfirmationStyle>
-      <div>
-        <h1>Confirme sua compra</h1>
+      {user ? (
         <div>
-          <ul>
-            {list.map((e, index) => (
-              <li key={index}>
-                {e.model} - {e.size} <span>$ {e.price}</span>
-              </li>
-            ))}
-          </ul>
-          <span>
-            Total : ${" "}
-            {list.reduce((total, value) => total + value.price, 0).toFixed(2)}
-          </span>
+          <h1>Confirme sua compra</h1>
+          <div>
+            <ul>
+              {list.map((e, index) => (
+                <li key={index}>
+                  <div>
+                    {e.model} - {e.size}
+                  </div>
+                  <span>$ {(e.price / 100).toFixed(2)}</span>
+                </li>
+              ))}
+            </ul>
+            <span>
+              Total : ${" "}
+              {(
+                list.reduce((total, value) => total + value.price, 0) / 100
+              ).toFixed(2)}
+            </span>
+          </div>
+          <h1>Endereço</h1>
+          <Adress list={list}></Adress>
         </div>
-        <h1>Endereço</h1>
-        <Adress list={list}></Adress>
-      </div>
+      ) : (
+        <h1 style={{ "font-size": "40px" }}>Não autorizado</h1>
+      )}
     </PurchaseConfirmationStyle>
   );
 }
 function Adress({ list }) {
   const { user } = useContext(UserContext);
   const [isBlocked, setIsBlocked] = useState(false);
+  const [purchaseCompleted, setPurchaseCompleted] = useState(false);
   const [form, setForm] = useState({
     adress: "",
     number: "",
+    card: "",
   });
   const navigate = useNavigate();
   function handleForm(e) {
@@ -67,7 +79,8 @@ function Adress({ list }) {
     )
       .then(() => {
         setIsBlocked(false);
-        navigate("/");
+        setPurchaseCompleted(true);
+        setTimeout(() => navigate("/"), 1000);
       })
       .catch((answer) => {
         console.log(answer);
@@ -77,17 +90,23 @@ function Adress({ list }) {
   }
   return (
     <FormFinalizeStyle onSubmit={submitData}>
-      <Inputs
-        form={form}
-        handleForm={handleForm}
-        isBlocked={isBlocked}
-      ></Inputs>
-      <button onClick={() => navigate("/")} disabled={isBlocked}>
-        Voltar
-      </button>
-      <button type="submit" disabled={isBlocked}>
-        Finalizar pedido
-      </button>
+      {purchaseCompleted ? (
+        <h1>Compra Concluída com sucesso</h1>
+      ) : (
+        <>
+          <Inputs
+            form={form}
+            handleForm={handleForm}
+            isBlocked={isBlocked}
+          ></Inputs>
+          <button onClick={() => navigate("/")} disabled={isBlocked}>
+            Voltar
+          </button>
+          <button type="submit" disabled={isBlocked}>
+            Finalizar pedido
+          </button>
+        </>
+      )}
     </FormFinalizeStyle>
   );
 }
@@ -112,6 +131,15 @@ function Inputs({ form, handleForm, isBlocked }) {
         onChange={handleForm}
         readOnly={isBlocked}
       />
+      <p>Número do cartão</p>
+      <input
+        type="number"
+        name="card"
+        required
+        value={form.card}
+        onChange={handleForm}
+        readOnly={isBlocked}
+      />
     </>
   );
 }
@@ -132,6 +160,9 @@ const FormFinalizeStyle = styled.form`
   input[type="number"] {
     width: 90px;
   }
+  input[name="card"] {
+    width: 170px;
+  }
   input::placeholder {
     color: black;
   }
@@ -151,5 +182,8 @@ const FormFinalizeStyle = styled.form`
     &:hover {
       background-color: #141313;
     }
+  }
+  h1 {
+    color: rgb(27, 148, 16);
   }
 `;
