@@ -19,13 +19,18 @@ export default function PurchaseConfirmation() {
             <ul>
               {list.map((e, index) => (
                 <li key={index}>
-                  {e.model} - {e.size} <span>$ {e.price}</span>
+                  <div>
+                    {e.model} - {e.size}
+                  </div>
+                  <span>$ {(e.price / 100).toFixed(2)}</span>
                 </li>
               ))}
             </ul>
             <span>
               Total : ${" "}
-              {list.reduce((total, value) => total + value.price, 0).toFixed(2)}
+              {(
+                list.reduce((total, value) => total + value.price, 0) / 100
+              ).toFixed(2)}
             </span>
           </div>
           <h1>Endereço</h1>
@@ -40,7 +45,7 @@ export default function PurchaseConfirmation() {
 function Adress({ list }) {
   const { user } = useContext(UserContext);
   const [isBlocked, setIsBlocked] = useState(false);
-  const [purchaseCompleted, setPurchaseCompleted] = useState(true);
+  const [purchaseCompleted, setPurchaseCompleted] = useState(false);
   const [form, setForm] = useState({
     adress: "",
     number: "",
