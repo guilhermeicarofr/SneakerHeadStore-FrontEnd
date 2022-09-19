@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import UserContext from "../Contexts/userContext";
+import { StoreContext } from "../Contexts/storeContext.js";
 import PurchaseConfirmationStyle from "../../Styles/Purchase-confirmation-style";
 import { finalizePurchase } from "../../Services/axios";
 
@@ -44,6 +45,7 @@ export default function PurchaseConfirmation() {
 }
 function Adress({ list }) {
   const { user } = useContext(UserContext);
+  const { setShopcart } = useContext(StoreContext);
   const [isBlocked, setIsBlocked] = useState(false);
   const [purchaseCompleted, setPurchaseCompleted] = useState(false);
   const [form, setForm] = useState({
@@ -80,7 +82,8 @@ function Adress({ list }) {
       .then(() => {
         setIsBlocked(false);
         setPurchaseCompleted(true);
-        setTimeout(() => navigate("/"), 1000);
+        setShopcart([]);
+        setTimeout(() => navigate("/"), 3000);
       })
       .catch((answer) => {
         console.log(answer);

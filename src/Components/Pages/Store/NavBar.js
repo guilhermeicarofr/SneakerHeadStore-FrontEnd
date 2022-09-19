@@ -10,7 +10,7 @@ import { deleteSession } from "../../../Services/axios.js";
 
 export default function NavBar({ setShowcart }) {
   const { shopcart } = useContext(StoreContext);
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [showLogOut, setShowLogOut] = useState(false);
   const navigate = useNavigate();
 
