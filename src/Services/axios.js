@@ -12,4 +12,11 @@ function getProducts() {
 function deleteSession(config) {
   return axios.delete(`${process.env.REACT_APP_API_BASE_URL}session`, config);
 }
-export { signUp, signIn, getProducts, deleteSession };
+function finalizePurchase(body, config) {
+  return axios.post(
+    `${process.env.REACT_APP_API_BASE_URL}store-sales`,
+    body,
+    config
+  );
+}
+export { signUp, signIn, getProducts, deleteSession, finalizePurchase };

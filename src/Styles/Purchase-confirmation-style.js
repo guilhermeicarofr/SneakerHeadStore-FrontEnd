@@ -3,7 +3,6 @@ import styled from "styled-components";
 const PurchaseConfirmationStyle = styled.div`
   background-color: #4a4e69;
   min-height: 100vh;
-  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,6 +36,7 @@ const PurchaseConfirmationStyle = styled.div`
         display: flex;
         justify-content: space-between;
         margin: 10px 0;
+        font-size: 16px;
       }
     }
     > div {

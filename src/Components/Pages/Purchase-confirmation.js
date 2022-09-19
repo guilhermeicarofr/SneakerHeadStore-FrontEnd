@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import UserContext from "../Contexts/userContext";
 import PurchaseConfirmationStyle from "../../Styles/Purchase-confirmation-style";
 import { StoreContext } from "../Contexts/storeContext";
+import { finalizePurchase } from "../../Services/axios";
 
 import styled from "styled-components";
 
 export default function PurchaseConfirmation() {
-  const { shopcart, setShopcart } = useContext(StoreContext);
+  const { shopcart } = useContext(StoreContext);
   return (
     <PurchaseConfirmationStyle>
       <div>
@@ -36,6 +37,7 @@ export default function PurchaseConfirmation() {
 function Adress() {
   const { user } = useContext(UserContext);
   const [isBlocked, setIsBlocked] = useState(false);
+  const { shopcart } = useContext(StoreContext);
   const [form, setForm] = useState({
     adress: "",
     number: "",
@@ -49,12 +51,52 @@ function Adress() {
   }
   function submitData(event) {
     event.preventDefault();
-    console.log(form);
-    // navigate("/");
+    setIsBlocked(true);
+    finalizePurchase(
+      {
+        user: {
+          name: user.name,
+          email: user.email,
+          adress: form.adress,
+          number: form.number,
+        },
+        products: shopcart,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    )
+      .then(() => {
+        setIsBlocked(false);
+        navigate("/");
+      })
+      .catch((answer) => {
+        console.log(answer);
+        setIsBlocked(false);
+      });
     return;
   }
   return (
     <FormFinalizeStyle onSubmit={submitData}>
+      <Inputs
+        form={form}
+        handleForm={handleForm}
+        isBlocked={isBlocked}
+      ></Inputs>
+      <button onClick={() => navigate("/")} disabled={isBlocked}>
+        Voltar
+      </button>
+      <button type="submit" disabled={isBlocked}>
+        Finalizar pedido
+      </button>
+    </FormFinalizeStyle>
+  );
+}
+function Inputs({ form, handleForm, isBlocked }) {
+  return (
+    <>
       <p>Rua</p>
       <input
         type="text"
@@ -73,9 +115,7 @@ function Adress() {
         onChange={handleForm}
         readOnly={isBlocked}
       />
-      <button onClick={() => navigate("/")}>Voltar</button>
-      <button type="submit">Finalizar pedido</button>
-    </FormFinalizeStyle>
+    </>
   );
 }
 const FormFinalizeStyle = styled.form`
