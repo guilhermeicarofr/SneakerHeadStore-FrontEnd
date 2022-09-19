@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { IoCloseOutline } from "react-icons/io5";
 
 import { ProductCard, ProductExpanded } from "../../../Styles/product-card-styles.js";
 
@@ -33,7 +32,7 @@ export default function Product({
           <img src={img} alt="" />
           <h3>${(price / 100).toFixed(2)}</h3>
           <h4>{color}</h4>
-          <button onClick={()=>setSelectedproduct('')}><IoCloseOutline /></button>
+          <button onClick={()=>setSelectedproduct('')}>X</button>
           <ProductSelector id={id} setSelectedproduct={setSelectedproduct} />
         </ProductExpanded>
       </ProductCard>

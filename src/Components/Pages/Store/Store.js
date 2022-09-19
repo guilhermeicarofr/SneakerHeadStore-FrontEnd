@@ -4,14 +4,16 @@ import { StoreContext } from "../../Contexts/storeContext.js";
 import { getProducts } from "../../../Services/axios.js";
 import Product from "./Product.js";
 import NavBar from "./NavBar.js";
+import CartMenu from '../Cart/CartMenu.js';
 
 export default function Store() {
   const { products, setProducts } = useContext(StoreContext);
   const [selectedproduct, setSelectedproduct] = useState("");
+  const [ showcart, setShowcart ] = useState(false);
   useEffect(() => {
     getProducts()
       .then((res) => {
-        setProducts(res.data);
+        setProducts(res.data.sort(()=>Math.random()-0.5));
       })
       .catch((res) => {
         console.log(res.error);
@@ -19,7 +21,8 @@ export default function Store() {
   }, [setProducts]);
   return (
     <>
-      <NavBar />
+      <NavBar setShowcart={setShowcart} />
+      <CartMenu showcart={showcart} setShowcart={setShowcart} />
       <StoreContainer
         onClick={(e) => {
           if (e.target.localName === "main") setSelectedproduct("");
