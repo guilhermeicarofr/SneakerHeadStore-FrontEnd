@@ -47,8 +47,14 @@ function Adress() {
       [e.target.name]: e.target.value,
     });
   }
+  function submitData(event) {
+    event.preventDefault();
+    console.log(form);
+    // navigate("/");
+    return;
+  }
   return (
-    <FormFinalizeStyle>
+    <FormFinalizeStyle onSubmit={submitData}>
       <p>Rua</p>
       <input
         type="text"
@@ -68,7 +74,7 @@ function Adress() {
         readOnly={isBlocked}
       />
       <button onClick={() => navigate("/")}>Voltar</button>
-      <button onClick={() => navigate("/")}>Finalizar pedido</button>
+      <button type="submit">Finalizar pedido</button>
     </FormFinalizeStyle>
   );
 }
@@ -94,7 +100,7 @@ const FormFinalizeStyle = styled.form`
   }
   button {
     margin-top: 10px;
-    background-color: #20aa13;
+    background-color: #22223b;
     outline: none;
     border: none;
     border-radius: 10px;

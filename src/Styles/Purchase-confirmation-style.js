@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const PurchaseConfirmationStyle = styled.div`
-  background-color: #f2e9e4;
+  background-color: #4a4e69;
   min-height: 100vh;
   width: 100vw;
   display: flex;
@@ -17,7 +17,7 @@ const PurchaseConfirmationStyle = styled.div`
     font-size: 20px;
     > h1 {
       height: 40px;
-      background-color: #20aa13;
+      background-color: #22223b;
       color: #f2e9e4;
       display: flex;
       align-items: center;
