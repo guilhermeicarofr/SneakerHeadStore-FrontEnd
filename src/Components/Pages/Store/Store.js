@@ -13,7 +13,7 @@ export default function Store() {
   useEffect(() => {
     getProducts()
       .then((res) => {
-        setProducts(res.data);
+        setProducts(res.data.sort(()=>Math.random()-0.5));
       })
       .catch((res) => {
         console.log(res.error);

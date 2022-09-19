@@ -1,30 +1,38 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { StoreContext } from '../../Contexts/storeContext.js';
 import UserContext from '../../Contexts/userContext';
 
+import { CartMenuLayer } from '../../../Styles/cartStyles.js'
 import CartItem from './CartItem.js'
 
 export default function CartMenu({ showcart, setShowcart }) {
 
-    const { products, shopcart } = useContext(StoreContext);
+    const { products, shopcart, totalvalue, setTotalvalue } = useContext(StoreContext);
     const { user } = useContext(UserContext);
 
     const navigate = useNavigate();
-    
-    const list = products.filter((product) =>
-        shopcart.map((item)=>item.id).includes(product._id)
-    ).map((product) => {
+
+    const list = shopcart.map((item) => {
         return (
             {
-                ...product,
-                size: shopcart.find(item =>item.id === product._id).size
+                id: item.id,
+                size: item.size,
+                ...(products.find((product) => product._id === item.id))
+
             }
         );
     });
-    
+
+    useEffect(() => {
+        if(list.length) {
+            setTotalvalue(list.map(product => product.price).reduce((a, b) => a + b));
+        } else {
+            setTotalvalue(0);
+        }
+    },[list,setTotalvalue]);
+
 
     if(showcart) {
         return (
@@ -39,6 +47,7 @@ export default function CartMenu({ showcart, setShowcart }) {
                     <ul>
                         {list.map((product,index) => <CartItem
                             key={index}
+                            cartindex={index}
                             id={product._id}
                             model={product.model}
                             brand={product.brand}
@@ -49,10 +58,7 @@ export default function CartMenu({ showcart, setShowcart }) {
                         />)}
                     </ul>
 
-                    <h3>${list.length?
-                        (list.map(product => product.price).reduce((a, b) => a + b) / 100).toFixed(2) :
-                        '0.00'
-                    }</h3>
+                    <h3>${totalvalue ? (totalvalue / 100).toFixed(2) : '0.00'}</h3>
 
                     {(!user) ?
                         <button onClick={()=>navigate('/sign-in')}>Fazer Log-In</button>
@@ -72,39 +78,3 @@ export default function CartMenu({ showcart, setShowcart }) {
         );
     }
 }
-
-const CartMenuLayer = styled.div`
-    position: fixed;
-    top: 0px;
-    right: 0px;
-    z-index: 3;
-    display: flex;
-    > div{
-        width: Calc(100vw - 320px);
-        height: 100vh;
-        background-color: rgba(74, 78, 105, 0.5);
-    }
-    menu {
-        width: 320px;
-        height: 100vh;
-        background-color: #F2E9E4;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        button.close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 15px;
-            height: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: transparent;
-            background-color: transparent;
-        }
-        ul {
-            width: 100%;
-        }
-    }
-`;

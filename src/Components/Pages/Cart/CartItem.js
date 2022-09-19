@@ -1,14 +1,16 @@
 import { useContext } from 'react';
-import styled from 'styled-components';
+import { IoTrashOutline } from 'react-icons/io5';
 
 import { StoreContext } from '../../Contexts/storeContext.js';
 
-export default function CartItem({ id, model, brand, color, img, price, size }) {
+import { CartItemContainer } from '../../../Styles/cartStyles.js'
+
+export default function CartItem({ id, model, brand, color, img, price, size, cartindex }) {
 
     const { shopcart, setShopcart } = useContext(StoreContext);
 
     function removeItem() {
-        setShopcart(shopcart.filter((item)=>item.id!==id));
+        setShopcart(shopcart.filter((item,index) => !(item.id===id && index===cartindex)));
     }
 
     return (
@@ -16,20 +18,11 @@ export default function CartItem({ id, model, brand, color, img, price, size }) 
             <img src={img} alt=''/>
             <div>
                 <h1>{brand} {model}</h1>
-                <h2>{size}</h2>
-                <h2>{color}</h2>
+                <h2>Tam: {size}</h2>
                 <h3>${(price/100).toFixed(2)}</h3>
-                <button onClick={removeItem}>X</button>
+                <h4>Cor: {color}</h4>
+                <button onClick={removeItem}><IoTrashOutline /></button>
             </div>
         </CartItemContainer>
     );
 }
-
-const CartItemContainer = styled.li`
-    width: 100%;
-    display: flex;
-    img {
-        width: 70px;
-        height: 70px;
-    }
-`;
