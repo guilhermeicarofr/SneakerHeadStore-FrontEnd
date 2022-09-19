@@ -37,6 +37,10 @@ const PurchaseConfirmationStyle = styled.div`
         justify-content: space-between;
         margin: 10px 0;
         font-size: 16px;
+        min-height: 10px;
+        span {
+          width: 65px;
+        }
       }
     }
     > div {

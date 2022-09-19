@@ -1,43 +1,40 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import UserContext from "../Contexts/userContext";
 import PurchaseConfirmationStyle from "../../Styles/Purchase-confirmation-style";
-import { StoreContext } from "../Contexts/storeContext";
 import { finalizePurchase } from "../../Services/axios";
 
 import styled from "styled-components";
 
 export default function PurchaseConfirmation() {
-  const { shopcart } = useContext(StoreContext);
+  const { state: list } = useLocation();
   return (
     <PurchaseConfirmationStyle>
       <div>
         <h1>Confirme sua compra</h1>
         <div>
           <ul>
-            <li>
-              Rise nitro - 37 <span>$ 50</span>
-            </li>
-            <li>
-              Air max 97 - 33 <span>$ 75</span>
-            </li>
-            <li>
-              Retro 7 Citrus - 38 <span>$ 30</span>
-            </li>
+            {list.map((e, index) => (
+              <li key={index}>
+                {e.model} - {e.size} <span>$ {e.price}</span>
+              </li>
+            ))}
           </ul>
-          <span>Total : $ 500</span>
+          <span>
+            Total : ${" "}
+            {list.reduce((total, value) => total + value.price, 0).toFixed(2)}
+          </span>
         </div>
         <h1>Endereço</h1>
-        <Adress></Adress>
+        <Adress list={list}></Adress>
       </div>
     </PurchaseConfirmationStyle>
   );
 }
-function Adress() {
+function Adress({ list }) {
   const { user } = useContext(UserContext);
   const [isBlocked, setIsBlocked] = useState(false);
-  const { shopcart } = useContext(StoreContext);
   const [form, setForm] = useState({
     adress: "",
     number: "",
@@ -60,7 +57,7 @@ function Adress() {
           adress: form.adress,
           number: form.number,
         },
-        products: shopcart,
+        products: list,
       },
       {
         headers: {
