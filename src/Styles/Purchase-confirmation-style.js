@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 const PurchaseConfirmationStyle = styled.div`
   background-color: #f2e9e4;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: "Roboto", sans-serif;
+  padding: 40px 0;
   > div {
-    height: 400px;
     width: 80%;
     max-width: 800px;
     background-color: rgba(170, 196, 194, 0.897);
@@ -46,31 +46,6 @@ const PurchaseConfirmationStyle = styled.div`
         display: flex;
         justify-content: flex-end;
         margin-bottom: 40px;
-      }
-      div {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        > button {
-          background-color: #20aa13;
-          outline: none;
-          border: none;
-          border-radius: 10px;
-          color: #f2e9e4;
-          width: 50%;
-          min-height: 30px;
-          margin: 5px 0;
-          font-size: 18px;
-          min-width: 130px;
-          cursor: pointer;
-          &:hover {
-            background-color: #141313;
-          }
-          @media (max-width: 450px) {
-            font-size: 14px;
-          }
-        }
       }
     }
   }

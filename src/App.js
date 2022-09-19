@@ -7,7 +7,7 @@ import SignIn from "./Components/Pages/SignIn";
 import UserContext from "./Components/Contexts/userContext";
 import { StoreContext } from "./Components/Contexts/storeContext.js";
 import PurchaseConfirmation from "./Components/Pages/Purchase-confirmation";
-import FinalizeOrder from "./Components/Pages/Finalize-order";
+
 function App() {
   const [user, setUser] = useState(null);
   const [products, setProducts] = useState([]);
@@ -24,15 +24,13 @@ function App() {
           value={{ products, setProducts, shopcart, setShopcart }}
         >
           <Routes>
-            <Route path="/tirar-depois" element={<Store />} />
+            <Route path="/" element={<Store />} />
             <Route path="/sign-up" element={<SignUp />}></Route>
             <Route path="/sign-in" element={<SignIn />}></Route>
-            {/* <Route
+            <Route
               path="/purchase-confirmation"
-              element={<PurchaseConfirmation/>}
-            ></Route> */}
-            <Route path="/" element={<PurchaseConfirmation />}></Route>
-            <Route path="/finalize-order" element={<FinalizeOrder />}></Route>
+              element={<PurchaseConfirmation />}
+            ></Route>
           </Routes>
         </StoreContext.Provider>
       </UserContext.Provider>
